@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
 //This is KafkaTopicConfig.
+//This is first push to the repo with new branch "MICDM-7922"
 
 @Configuration
 public class KafkaTopicConfig {
