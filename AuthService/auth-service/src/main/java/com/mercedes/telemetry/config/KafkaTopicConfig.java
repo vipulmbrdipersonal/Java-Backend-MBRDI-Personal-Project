@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+//This is KafkaTopicConfig.
+
 @Configuration
 public class KafkaTopicConfig {
 
