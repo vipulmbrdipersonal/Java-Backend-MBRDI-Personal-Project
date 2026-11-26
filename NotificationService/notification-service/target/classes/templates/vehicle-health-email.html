@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mercedes-Benz Vehicle Health Report</title>
+</head>
+
+<body style="margin:0;padding:0;width:100%;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#1f2a36;">
+
+<!-- FULL-WIDTH WRAPPER -->
+<table role="presentation"
+       width="100%"
+       cellpadding="0"
+       cellspacing="0"
+       border="0"
+       style="width:100%;background-color:#ffffff;">
+
+    <tr>
+        <td width="100%" align="center" style="padding:0;">
+
+            <!-- MAIN CONTAINER -->
+            <table role="presentation"
+                   width="100%"
+                   cellpadding="0"
+                   cellspacing="0"
+                   border="0"
+                   style="width:100%;background-color:#ffffff;">
+
+                <!-- ACCENT STRIP -->
+                <tr>
+                    <td width="100%" style="width:100%;background-color:#00a6d6;height:6px;font-size:1px;line-height:1px;">&#160;</td>
+                </tr>
+
+                <!-- HERO: LOGO ROW + TITLE + FULL-WIDTH CAR -->
+                <tr>
+                    <td width="100%" style="width:100%;background-color:#0b1118;padding:0;">
+
+                        <!-- Logo on the left, status on the right -->
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;">
+                            <tr>
+                                <td width="65" valign="middle" style="width:65px;padding:24px 0 0 30px;">
+                                    <img src="cid:mercedesLogo"
+                                         alt="Mercedes-Benz"
+                                         width="55"
+                                         height="55"
+                                         style="display:block;width:55px;height:55px;border:0;" />
+                                </td>
+
+                                <td valign="middle" style="padding:24px 0 0 12px;">
+                                    <div style="font-size:20px;font-weight:bold;letter-spacing:2.5px;color:#ffffff;">
+                                        MERCEDES-BENZ
+                                    </div>
+                                    <div style="margin-top:5px;font-size:9px;letter-spacing:3px;color:#00a6d6;">
+                                        THE BEST OR NOTHING
+                                    </div>
+                                </td>
+
+                                <td align="right" valign="middle" style="padding:24px 30px 0 0;">
+                                    <span th:text="${report.status}"
+                                          th:style="'display:inline-block;padding:8px 14px;background-color:' + ${report.statusColor} + ';color:#ffffff;font-size:10px;font-weight:bold;letter-spacing:1.2px;border-radius:4px;'">
+                                        HEALTHY
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Title -->
+                        <div style="padding:22px 30px 18px 30px;">
+                            <div style="font-size:26px;font-weight:bold;line-height:1.25;color:#ffffff;">
+                                Vehicle Health Report
+                            </div>
+                            <div style="margin-top:8px;font-size:10px;letter-spacing:1.5px;color:#aab6c2;">
+                                YOUR VEHICLE. YOUR INTELLIGENCE. YOUR CONFIDENCE.
+                            </div>
+                        </div>
+
+                        <!-- Car fills the remaining width edge to edge -->
+                        <img src="cid:gWagon"
+                             alt="Mercedes-Benz G-Class"
+                             width="620"
+                             height="250"
+                             style="display:block;width:100%;height:250;border:0;" />
+
+                    </td>
+                </tr>
+
+                <!-- INTRODUCTION -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:28px 30px 10px 30px;">
+                        <div style="font-size:18px;font-weight:bold;color:#0b1118;">
+                            Your vehicle health summary
+                        </div>
+                        <div style="margin-top:8px;font-size:12px;line-height:1.7;color:#5d6a76;">
+                            Your latest vehicle telemetry has been analyzed. Below is the current
+                            health assessment and the key diagnostic information for your vehicle.
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- HEALTH SCORE CARD -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:14px 30px 22px 30px;">
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;background-color:#0b1118;border-radius:10px;">
+                            <tr>
+                                <td width="50%" style="width:50%;padding:22px;">
+                                    <div style="font-size:9px;font-weight:bold;letter-spacing:1.5px;color:#00a6d6;">
+                                        VEHICLE HEALTH SCORE
+                                    </div>
+                                    <div style="margin-top:8px;font-size:40px;font-weight:bold;color:#ffffff;">
+                                        <span th:text="${report.healthScore}">96</span>
+                                        <span style="font-size:15px;color:#8997a4;">/ 100</span>
+                                    </div>
+                                    <div style="margin-top:5px;font-size:10px;color:#aab6c2;">
+                                        Overall condition rating
+                                    </div>
+                                </td>
+                                <td width="50%" align="right" valign="middle" style="width:50%;padding:22px;">
+                                    <div style="font-size:9px;font-weight:bold;letter-spacing:1.5px;color:#aab6c2;">
+                                        CURRENT STATUS
+                                    </div>
+                                    <div style="margin-top:12px;">
+                                        <span th:text="${report.status}"
+                                              th:style="'display:inline-block;padding:10px 16px;background-color:' + ${report.statusColor} + ';color:#ffffff;font-size:12px;font-weight:bold;letter-spacing:1.2px;border-radius:5px;'">
+                                            HEALTHY
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- VEHICLE INFORMATION -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 24px 30px;">
+                        <div style="margin-bottom:12px;padding-left:10px;border-left:4px solid #00a6d6;font-size:13px;font-weight:bold;color:#0b1118;">
+                            Vehicle information
+                        </div>
+
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;">
+                            <tr>
+                                <td width="38%" style="width:38%;padding:11px 12px;background-color:#f4f7fa;border-bottom:2px solid #ffffff;font-size:10px;font-weight:bold;letter-spacing:.8px;color:#7a8793;">
+                                    VEHICLE ID
+                                </td>
+                                <td width="62%" style="width:62%;padding:11px 12px;background-color:#f4f7fa;border-bottom:2px solid #ffffff;font-size:12px;font-weight:bold;color:#0b1118;"
+                                    th:text="${report.vehicleId}">
+                                    1024
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="38%" style="width:38%;padding:11px 12px;background-color:#f4f7fa;border-bottom:2px solid #ffffff;font-size:10px;font-weight:bold;letter-spacing:.8px;color:#7a8793;">
+                                    VIN
+                                </td>
+                                <td width="62%" style="width:62%;padding:11px 12px;background-color:#f4f7fa;border-bottom:2px solid #ffffff;font-size:12px;font-weight:bold;color:#0b1118;word-break:break-all;"
+                                    th:text="${report.vin}">
+                                    VEHICLE-VIN
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="38%" style="width:38%;padding:11px 12px;background-color:#f4f7fa;font-size:10px;font-weight:bold;letter-spacing:.8px;color:#7a8793;">
+                                    ASSESSMENT DATE
+                                </td>
+                                <td width="62%" style="width:62%;padding:11px 12px;background-color:#f4f7fa;font-size:12px;font-weight:bold;color:#0b1118;"
+                                    th:text="${report.assessedAtText}">
+                                    Assessment Date
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- DIAGNOSTIC READINGS -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 24px 30px;">
+                        <div style="margin-bottom:12px;padding-left:10px;border-left:4px solid #00a6d6;font-size:13px;font-weight:bold;color:#0b1118;">
+                            Diagnostic readings
+                        </div>
+
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;">
+                            <tr>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">ENGINE TEMPERATURE</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;">
+                                                    <span th:text="${report.engineTemperature != null ? #numbers.formatDecimal(report.engineTemperature,1,2) : '—'}">86.00</span>
+                                                    <span style="font-size:10px;color:#7a8793;">°C</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">BATTERY VOLTAGE</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;">
+                                                    <span th:text="${report.batteryVoltage != null ? #numbers.formatDecimal(report.batteryVoltage,1,2) : '—'}">12.80</span>
+                                                    <span style="font-size:10px;color:#7a8793;">V</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">FUEL LEVEL</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;">
+                                                    <span th:text="${report.fuelLevel != null ? #numbers.formatDecimal(report.fuelLevel,1,1) : '—'}">74.0</span>
+                                                    <span style="font-size:10px;color:#7a8793;">%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">ENGINE RPM</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;"
+                                                     th:text="${report.rpm != null ? report.rpm : '—'}">
+                                                    1850
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">VEHICLE SPEED</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;">
+                                                    <span th:text="${report.speed != null ? #numbers.formatDecimal(report.speed,1,1) : '—'}">65.0</span>
+                                                    <span style="font-size:10px;color:#7a8793;">km/h</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%" style="width:50%;padding:5px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                           style="width:100%;background-color:#ffffff;border:1px solid #dfe6ed;border-top:3px solid #00a6d6;border-radius:6px;">
+                                        <tr>
+                                            <td width="100%" style="padding:13px;">
+                                                <div style="font-size:9px;font-weight:bold;color:#7a8793;letter-spacing:.8px;">ODOMETER</div>
+                                                <div style="margin-top:7px;font-size:22px;font-weight:bold;color:#0b1118;">
+                                                    <span th:text="${report.odometer != null ? #numbers.formatDecimal(report.odometer,1,1) : '—'}">24500.0</span>
+                                                    <span style="font-size:10px;color:#7a8793;">km</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- TYRE PRESSURE -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 24px 30px;">
+                        <div style="margin-bottom:12px;padding-left:10px;border-left:4px solid #00a6d6;font-size:13px;font-weight:bold;color:#0b1118;">
+                            Tyre pressure monitoring
+                        </div>
+
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;">
+                            <tr>
+                                <td width="50%" style="width:50%;padding:11px 12px;background-color:#0b1118;color:#ffffff;font-size:9px;font-weight:bold;letter-spacing:1px;">
+                                    TYRE POSITION
+                                </td>
+                                <td width="50%" align="right" style="width:50%;padding:11px 12px;background-color:#0b1118;color:#ffffff;font-size:9px;font-weight:bold;letter-spacing:1px;">
+                                    PRESSURE
+                                </td>
+                            </tr>
+                            <tr th:each="tyre, stat : ${report.tyres}"
+                                th:style="${stat.odd} ? 'background-color:#f4f7fa;' : 'background-color:#ffffff;'">
+                                <td width="50%" style="width:50%;padding:11px 12px;border-bottom:1px solid #e3e9ef;font-size:12px;color:#35424d;"
+                                    th:text="${tyre.position}">
+                                    Front Left
+                                </td>
+                                <td width="50%" align="right" style="width:50%;padding:11px 12px;border-bottom:1px solid #e3e9ef;font-size:12px;font-weight:bold;color:#0b1118;"
+                                    th:text="${tyre.pressure != null ? #numbers.formatDecimal(tyre.pressure,1,2) + ' PSI' : '—'}">
+                                    34.00 PSI
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- HEALTH ASSESSMENT -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 24px 30px;">
+                        <div style="margin-bottom:12px;padding-left:10px;border-left:4px solid #00a6d6;font-size:13px;font-weight:bold;color:#0b1118;">
+                            Health assessment
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(report.issues)}"
+                             style="width:100%;padding:16px;background-color:#edf8f1;border-left:4px solid #1f9d63;border-radius:4px;">
+                            <div style="font-size:12px;font-weight:bold;color:#1d6b47;letter-spacing:.8px;">
+                                NO HEALTH ISSUES DETECTED
+                            </div>
+                            <div style="margin-top:6px;font-size:11px;line-height:1.6;color:#426b55;">
+                                Your vehicle is operating within the configured health assessment thresholds.
+                            </div>
+                        </div>
+
+                        <div th:if="${!#lists.isEmpty(report.issues)}">
+                            <div th:each="issue : ${report.issues}"
+                                 style="width:100%;margin-bottom:7px;padding:12px 14px;background-color:#fff6e9;border-left:4px solid #d49a3c;border-radius:4px;font-size:11px;line-height:1.6;color:#5c4520;"
+                                 th:text="${issue}">
+                                Vehicle health issue
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- RECOMMENDATION -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 26px 30px;">
+                        <div style="margin-bottom:12px;padding-left:10px;border-left:4px solid #00a6d6;font-size:13px;font-weight:bold;color:#0b1118;">
+                            Recommended action
+                        </div>
+
+                        <div style="width:100%;padding:16px;background-color:#0b1118;border-left:4px solid #00a6d6;border-radius:6px;font-size:11px;line-height:1.7;color:#e6ecf1;"
+                             th:text="${report.recommendation}">
+                            Continue regular vehicle maintenance and monitoring.
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- PDF ATTACHMENT NOTICE -->
+                <tr>
+                    <td width="100%" style="width:100%;padding:0 30px 28px 30px;">
+                        <table role="presentation"
+                               width="100%"
+                               cellpadding="0"
+                               cellspacing="0"
+                               border="0"
+                               style="width:100%;background-color:#eaf6fc;border-radius:6px;">
+                            <tr>
+                                <td width="100%" style="padding:15px 16px;">
+                                    <div style="font-size:12px;font-weight:bold;color:#0b1118;">
+                                        Your detailed report is attached
+                                    </div>
+                                    <div style="margin-top:5px;font-size:10px;line-height:1.6;color:#4a5a68;">
+                                        A PDF copy of your vehicle health report is included with this email for your records.
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td width="100%" align="center" style="width:100%;background-color:#0b1118;padding:26px 20px;">
+                        <div style="font-size:15px;font-weight:bold;letter-spacing:3px;color:#ffffff;">
+                            MERCEDES-BENZ
+                        </div>
+                        <div style="margin-top:7px;font-size:10px;font-style:italic;color:#00a6d6;">
+                            The Best or Nothing.
+                        </div>
+                        <div style="margin-top:15px;font-size:9px;line-height:1.7;color:#8997a4;">
+                            Generated automatically by the Mercedes-Benz Vehicle Intelligence Platform.
+                            <br />
+                            This is an automated vehicle diagnostic report.
+                        </div>
+                        <div style="margin-top:12px;font-size:8px;letter-spacing:1px;color:#71808c;">
+                            CONFIDENTIAL VEHICLE INFORMATION
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

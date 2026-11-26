@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/AuthService/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CatalogueService/pom.xml" />
+        <option value="$PROJECT_DIR$/CatalogueService/catalog-service/pom.xml" />
+        <option value="$PROJECT_DIR$/VehicleService/vehicle-service/pom.xml" />
+        <option value="$PROJECT_DIR$/PurchaseService/purchase-service/pom.xml" />
+        <option value="$PROJECT_DIR$/TelemetryService/telemetry-service/pom.xml" />
+        <option value="$PROJECT_DIR$/VehicleHealthService/vehicle-health-service/pom.xml" />
+        <option value="$PROJECT_DIR$/NotificationService/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/DashboardService/dashboard-service/pom.xml" />
+        <option value="$PROJECT_DIR$/TelemetryService/telemetry-producer/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

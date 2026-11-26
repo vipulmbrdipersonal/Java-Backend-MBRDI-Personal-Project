@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mercedes-Benz Vehicle Health Report</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2a36;
+            font-size: 9px;
+            background-color: #ffffff;
+        }
+
+        table, tr, td, th {
+            page-break-inside: avoid;
+        }
+
+        /* ---------- HERO HEADER ---------- */
+        .hero {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #0b1118;
+        }
+
+        .hero td {
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .accent-strip {
+            height: 6px;
+            background-color: #00a6d6;
+            font-size: 1px;
+            line-height: 1px;
+        }
+
+        .hero-inner {
+            padding: 22px 30px 20px 30px;
+        }
+
+        .logo {
+            display: block;
+            width: 52px;
+            height: 52px;
+        }
+
+        .brand-name {
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #aab6c2;
+            margin-bottom: 4px;
+        }
+
+        .report-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0 0 3px 0;
+        }
+
+        .subtitle {
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #00a6d6;
+            text-transform: uppercase;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 7px 14px;
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            border-radius: 4px;
+        }
+
+        /* ---------- BODY WRAPPER ---------- */
+        .content {
+            padding: 0 30px;
+        }
+
+        /* ---------- VEHICLE + SCORE CARD ---------- */
+        .id-card {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+            background-color: #f4f7fa;
+            border: 1px solid #dfe6ed;
+        }
+
+        .id-card td {
+            vertical-align: middle;
+            padding: 16px 18px;
+        }
+
+        .label {
+            font-size: 7px;
+            font-weight: bold;
+            color: #7a8793;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 5px;
+        }
+
+        .vehicle-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0b1118;
+            margin-bottom: 5px;
+        }
+
+        .vin {
+            font-size: 9px;
+            color: #5d6a76;
+            letter-spacing: 0.5px;
+        }
+
+        .score-box {
+            text-align: center;
+            border-left: 1px solid #dfe6ed;
+        }
+
+        .score {
+            font-size: 34px;
+            font-weight: bold;
+            color: #0b1118;
+            line-height: 36px;
+        }
+
+        .score-small {
+            font-size: 11px;
+            color: #8a96a1;
+        }
+
+        /* ---------- SECTION TITLES ---------- */
+        .section-title {
+            margin: 22px 0 10px 0;
+            padding-left: 10px;
+            border-left: 4px solid #00a6d6;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #0b1118;
+        }
+
+        /* ---------- TELEMETRY CARDS ---------- */
+        .metrics {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 6px;
+            table-layout: fixed;
+            margin: 0 -6px;
+        }
+
+        .metric-card {
+            background-color: #ffffff;
+            border: 1px solid #dfe6ed;
+            border-top: 3px solid #00a6d6;
+            padding: 10px 10px 11px 10px;
+            vertical-align: top;
+        }
+
+        .metric-label {
+            color: #7a8793;
+            font-size: 7px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            color: #0b1118;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .unit {
+            color: #7a8793;
+            font-size: 8px;
+            font-weight: normal;
+        }
+
+        /* ---------- TYRES ---------- */
+        .tyres {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tyres th {
+            background-color: #0b1118;
+            color: #ffffff;
+            text-align: left;
+            padding: 8px 12px;
+            font-size: 7px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tyres td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e3e9ef;
+            font-size: 9px;
+            color: #1f2a36;
+        }
+
+        .tyres .row-alt td {
+            background-color: #f4f7fa;
+        }
+
+        .tyre-value {
+            font-weight: bold;
+            color: #0b1118;
+        }
+
+        /* ---------- ISSUES ---------- */
+        .healthy-message {
+            padding: 12px 14px;
+            background-color: #edf8f1;
+            border-left: 4px solid #1f9d63;
+            color: #1d6b47;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .issue-item {
+            padding: 9px 12px;
+            margin-bottom: 6px;
+            background-color: #fff6e9;
+            border-left: 4px solid #d49a3c;
+            color: #5c4520;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        /* ---------- RECOMMENDATION ---------- */
+        .recommendation {
+            background-color: #0b1118;
+            color: #e6ecf1;
+            padding: 14px 16px;
+            font-size: 9px;
+            line-height: 1.6;
+            border-left: 4px solid #00a6d6;
+        }
+
+        .assessment-date {
+            margin-top: 14px;
+            font-size: 8px;
+            color: #5d6a76;
+        }
+
+        .assessment-date span {
+            font-weight: bold;
+            color: #0b1118;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            width: 100%;
+            margin-top: 22px;
+            border-collapse: collapse;
+            background-color: #0b1118;
+        }
+
+        .footer td {
+            padding: 14px 30px;
+            text-align: center;
+            color: #8997a4;
+            font-size: 7px;
+            line-height: 1.6;
+        }
+
+        .footer-brand {
+            font-size: 9px;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+
+        .footer-accent {
+            font-size: 1px;
+            line-height: 1px;
+            height: 4px;
+            background-color: #00a6d6;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO HEADER -->
+<table class="hero">
+    <tr>
+        <td colspan="2" class="accent-strip">&#160;</td>
+    </tr>
+    <tr>
+        <td class="hero-inner" style="width:70%;">
+            <table style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:62px;padding:0;">
+                        <img class="logo"
+                             th:src="${report.logoDataUri}"
+                             src="data:image/png;base64,"
+                             alt="Mercedes-Benz emblem" />
+                    </td>
+                    <td style="padding:0 0 0 6px;vertical-align:middle;">
+                        <div class="brand-name">MERCEDES-BENZ</div>
+                        <h1 class="report-title">Vehicle Health Report</h1>
+                        <div class="subtitle">Connected Vehicle Diagnostics &amp; Health Assessment</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="hero-inner" style="width:30%;text-align:right;vertical-align:middle;">
+            <span class="status-pill"
+                  th:style="'background-color:' + ${report.statusColor}"
+                  th:text="${report.status}">
+                HEALTHY
+            </span>
+        </td>
+    </tr>
+</table>
+
+<div class="content">
+
+    <!-- VEHICLE IDENTIFICATION + SCORE -->
+    <table class="id-card">
+        <tr>
+            <td style="width:65%;">
+                <div class="label">Vehicle Identification</div>
+                <div class="vehicle-name" th:text="${report.vehicleId}">Vehicle ID</div>
+                <div class="vin">
+                    VIN:&#160;<span th:text="${report.vin}">VIN</span>
+                </div>
+            </td>
+            <td class="score-box" style="width:35%;">
+                <div class="label">Vehicle Health Score</div>
+                <div class="score">
+                    <span th:text="${report.healthScore}">95</span><span class="score-small"> /100</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- TELEMETRY -->
+    <div class="section-title">Vehicle Telemetry Overview</div>
+
+    <table class="metrics">
+        <tr>
+            <td class="metric-card">
+                <div class="metric-label">Engine Temperature</div>
+                <div class="metric-value">
+                    <span th:text="${report.engineTemperature != null ? #numbers.formatDecimal(report.engineTemperature,1,2) : '—'}">86.00</span>
+                    <span class="unit">°C</span>
+                </div>
+            </td>
+            <td class="metric-card">
+                <div class="metric-label">Battery Voltage</div>
+                <div class="metric-value">
+                    <span th:text="${report.batteryVoltage != null ? #numbers.formatDecimal(report.batteryVoltage,1,2) : '—'}">12.80</span>
+                    <span class="unit">V</span>
+                </div>
+            </td>
+            <td class="metric-card">
+                <div class="metric-label">Fuel Level</div>
+                <div class="metric-value">
+                    <span th:text="${report.fuelLevel != null ? #numbers.formatDecimal(report.fuelLevel,1,1) : '—'}">74.0</span>
+                    <span class="unit">%</span>
+                </div>
+            </td>
+            <td class="metric-card">
+                <div class="metric-label">Engine RPM</div>
+                <div class="metric-value">
+                    <span th:text="${report.rpm != null ? report.rpm : '—'}">1850</span>
+                    <span class="unit">RPM</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="metric-card">
+                <div class="metric-label">Vehicle Speed</div>
+                <div class="metric-value">
+                    <span th:text="${report.speed != null ? #numbers.formatDecimal(report.speed,1,1) : '—'}">65.0</span>
+                    <span class="unit">km/h</span>
+                </div>
+            </td>
+            <td class="metric-card">
+                <div class="metric-label">Odometer</div>
+                <div class="metric-value">
+                    <span th:text="${report.odometer != null ? #numbers.formatDecimal(report.odometer,1,1) : '—'}">24500.0</span>
+                    <span class="unit">km</span>
+                </div>
+            </td>
+            <td class="metric-card" colspan="2">
+                <div class="metric-label">Assessment Status</div>
+                <div class="metric-value" th:text="${report.status}">HEALTHY</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- TYRE PRESSURE -->
+    <div class="section-title">Tyre Pressure Analysis</div>
+
+    <table class="tyres">
+        <thead>
+        <tr>
+            <th style="width:50%;">Tyre Position</th>
+            <th style="width:30%;">Pressure</th>
+            <th style="width:20%;">Unit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tyre, stat : ${report.tyres}"
+            th:class="${stat.odd} ? 'row-alt' : ''">
+            <td th:text="${tyre.position}">Front Left</td>
+            <td class="tyre-value"
+                th:text="${tyre.pressure != null ? #numbers.formatDecimal(tyre.pressure,1,2) : '—'}">34.00</td>
+            <td>PSI</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ISSUES -->
+    <div class="section-title">Detected Issues</div>
+
+    <div class="healthy-message"
+         th:if="${#lists.isEmpty(report.issues)}">
+        <strong>No vehicle health issues detected.</strong>
+        All monitored parameters are within the expected operating range.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(report.issues)}">
+        <div class="issue-item"
+             th:each="issue : ${report.issues}"
+             th:text="${issue}">
+            Vehicle health issue
+        </div>
+    </div>
+
+    <!-- RECOMMENDATION -->
+    <div class="section-title">Recommended Action</div>
+
+    <div class="recommendation"
+         th:text="${report.recommendation}">
+        Continue regular vehicle maintenance and monitoring.
+    </div>
+
+    <div class="assessment-date">
+        Assessment Date:&#160;<span th:text="${report.assessedAtText}">Assessment date</span>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<table class="footer">
+    <tr>
+        <td class="footer-accent" style="height:4px;padding:0;">&#160;</td>
+    </tr>
+    <tr>
+        <td>
+            <div class="footer-brand">MERCEDES-BENZ</div>
+            Intelligent Vehicle Health Monitoring System
+            <br />
+            Automatically generated from connected vehicle telemetry.
+            Consult an authorised service centre for professional inspection.
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
